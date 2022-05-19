@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Pupil_ZMQ_ROS Publisher
 - ZMQ subscriber to receive gaze and pupil data
@@ -83,23 +83,23 @@ class Pupil_ZMQ_ROS(object):
         '''
         context = zmq.Context()
         self.zmq_req = context.socket(zmq.REQ)
-        self.zmq_req.connect("tcp://%s:%s" %(addr,req_port))
+        self.zmq_req.connect("tcp://{}:{}".format(addr, req_port))
         # ask for the sub port
-        self.zmq_req.send('SUB_PORT')
-        sub_port = self.zmq_req.recv()
+        self.zmq_req.send_string('SUB_PORT')
+        sub_port = self.zmq_req.recv_string()
         # open a sub port to listen to pupil
         self.zmq_sub = context.socket(zmq.SUB)
-        self.zmq_sub.connect("tcp://%s:%s" %(addr,sub_port))
+        self.zmq_sub.connect("tcp://{}:{}".format(addr, sub_port))
         # set subscriptions to topics
         # recv just pupil/gaze/frame/notifications
-        self.zmq_sub.setsockopt(zmq.SUBSCRIBE, 'pupil.')
-        self.zmq_sub.setsockopt(zmq.SUBSCRIBE, 'gaze')
-        self.zmq_sub.setsockopt(zmq.SUBSCRIBE, 'frame.')
+        self.zmq_sub.setsockopt_string(zmq.SUBSCRIBE, 'pupil.')
+        self.zmq_sub.setsockopt_string(zmq.SUBSCRIBE, 'gaze.')
+        self.zmq_sub.setsockopt_string(zmq.SUBSCRIBE, 'frame.')
         # self.zmq_sub.setsockopt(zmq.SUBSCRIBE, 'notify.')
         # self.zmq_sub.setsockopt(zmq.SUBSCRIBE, 'logging.')
         # or everything
         # sub.setsockopt(zmq.SUBSCRIBE, '')
-        print 'Pupil_ZMQ_ROS: zmq environment initialized'
+        print ('Pupil_ZMQ_ROS: zmq environment initialized')
 
 
     def init_ros(self):
@@ -116,11 +116,11 @@ class Pupil_ZMQ_ROS(object):
             self.ros_eye1_img_publisher = rospy.Publisher('/pupil_capture/eye/1', Image, queue_size=2)
             self.ros_started = True
             self.seq = 0
-            print 'Pupil_ZMQ_ROS: ros environment initialized'
+            print ('Pupil_ZMQ_ROS: ros environment initialized')
         except rospy.ROSInterruptException as e:
             self.ros_started = False
             self.seq = 0
-            print 'Pupil_ZMQ_ROS: unable to start ros node:', e
+            print ('Pupil_ZMQ_ROS: unable to start ros node:', e)
 
 
     def spin(self):
@@ -129,7 +129,7 @@ class Pupil_ZMQ_ROS(object):
         :return:
         '''
         if not self.ros_started:
-            print 'Pupil_ZMQ_ROS: ros not started'
+            print ('Pupil_ZMQ_ROS: ros not started')
             return
         while True:
             # rospy.is_shutdown check inside while loop to enable Ctrl-C termination
@@ -144,7 +144,11 @@ class Pupil_ZMQ_ROS(object):
             header.stamp = rospy.get_rostime()
             header.frame_id = "Pupil_ZMQ_ROS"
             zmq_msg = loads(zmq_raw_msg)
-            if 'pupil' in zmq_topic:
+            
+            print(zmq_msg)
+            zmq_topic = zmq_topic.decode()
+            print(zmq_topic)
+            if 'eye_center_3d' in zmq_topic:
                 # pupil data parser
                 pupil_msg = pupil_positions()
                 pupil_msg.header = header
