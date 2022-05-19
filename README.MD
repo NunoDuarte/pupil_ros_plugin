@@ -66,7 +66,7 @@ As suggested by pupil-labs, the plugins in ```pupil_ros_plugin/plugins``` can be
 ## Note
 - An example pupil plugin is created at ```pupil_ros_plugin/plugins/example_plugin.py```, to show the API and GUI elements of [pyglui](https://github.com/pupil-labs/pyglui).
 
-- The plugins and ROS script are tested on Linux 16.04 LTS and ROS Kinetic.
+- The plugins and ROS script are tested on Linux 20.04 LTS and ROS noetic.
 
 ## TODO
 * Support more image format; currently, only ```bgr``` is supported.
