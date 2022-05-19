@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 Pupil_ROS_Bridge Plugin
 - Start ROS node to publish gaze_positions, pupil_positions, and world image
@@ -127,7 +127,7 @@ class Pupil_ROS_Bridge(Plugin):
             self.world_img_publish_flag = False
             self.ros_started = False
             self.seq = 0
-            print "Unable to start ros node:", e
+            print ("Unable to start ros node:", e)
 
     def stop_ros(self):
         '''
@@ -145,7 +145,7 @@ class Pupil_ROS_Bridge(Plugin):
             self.pupil_publish_flag = False
             self.world_img_publish_flag = False
             self.menu[self.ros_button_position] = self.ros_start_button
-            print 'ROS node shutdown'
+            print ('ROS node shutdown')
 
 
     def update(self,frame=None,events={}):

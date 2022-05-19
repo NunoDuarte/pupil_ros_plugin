@@ -190,9 +190,9 @@ class Example_Plugin(Plugin):
         :param action: mouse up or mouse down
         :return: Nothing
         '''
-        print 'Example Plugin: on_click called with position:', pos,\
+        print ('Example Plugin: on_click called with position:', pos,\
             'left' if button == 0 else ('middle' if button == 2 else 'right'),\
-            'up' if action == 0 else 'down'
+            'up' if action == 0 else 'down')
 
 
     def on_window_resize(self,window,w,h):
@@ -200,7 +200,7 @@ class Example_Plugin(Plugin):
         gets called when user resizes window.
         window is the glfw window handle of the resized window.
         '''
-        print 'Example Plugin: on_window_resize, resized to %d by %d)' % (w, h)
+        print ('Example Plugin: on_window_resize, resized to %d by %d)' % (w, h))
 
 
     def on_notify(self,notification):
@@ -211,8 +211,8 @@ class Example_Plugin(Plugin):
         note that notifications are collected from all threads and processes and dispatched in the update loop.
         this callback happens in the main thread.
         '''
-        print 'Example Plugin: on_notify'
-        print notification
+        print ('Example Plugin: on_notify')
+        print (notification)
 
 
     def get_init_dict(self):
@@ -239,7 +239,7 @@ class Example_Plugin(Plugin):
 
     # Customized callback functions
     def button_callback(self):
-        print 'Example Plugin: button_callback'
+        print ('Example Plugin: button_callback')
 
 
     def thumb_callback(self, _=None):
@@ -249,12 +249,12 @@ class Example_Plugin(Plugin):
         :param _: Placeholder
         :return: Nothing
         '''
-        print 'Example Plugin thumb_calledback, thumb_status', 'True' if self.thumb_active else 'False'
+        print ('Example Plugin thumb_calledback, thumb_status', 'True' if self.thumb_active else 'False')
 
     def print_g_pool_callback(self):
-        print 'Example Plugin: print_g_pool_callback'
+        print ('Example Plugin: print_g_pool_callback')
         for attr in dir(self.g_pool):
-            print 'obj.%s = %s' % (attr, getattr(self.g_pool, attr))
+            print ('obj.%s = %s' % (attr, getattr(self.g_pool, attr)))
 
     def remove_plugin(self):
         self.alive = False
