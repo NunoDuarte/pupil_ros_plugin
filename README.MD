@@ -1,8 +1,8 @@
 Pupil ROS Plugin
 ===
-Author: [Long Qian](http://longqian.me/aboutme)
+Author: Nuno Duarte - adapted from [Long Qian](http://longqian.me/aboutme)
 
-Date: 2016-11-19
+Date: 2022-05-19
 
 ## Overview
 
